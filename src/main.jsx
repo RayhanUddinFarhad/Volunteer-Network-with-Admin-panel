@@ -11,6 +11,7 @@ import AdminPage from './components/Pages/Admin/AdminPage.jsx';
 import List from './components/Pages/Admin/List.jsx';
 import AdminForm from './components/Pages/Admin/AdminForm.jsx';
 import Register from './components/Pages/Register/Register.jsx';
+import ShowAll from './components/Pages/Home/Event/ShowAll.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,11 @@ const router = createBrowserRouter([
         element : <Home></Home>,
         loader : () => fetch ('http://localhost:7000/totalItems')
       },
+      {
+
+        path : "/showAll",
+        element : <ShowAll></ShowAll>,
+      }
 
      
     ]

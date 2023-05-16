@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Events from './Event/Events';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
 
 const Home = () => {
@@ -119,6 +119,10 @@ const Home = () => {
             Next Page
           </button>
         )}
+
+
+
+       <Link to= "/showAll"> <button className='btn btn-error'>Show All </button></Link>
       </div>
 
 
