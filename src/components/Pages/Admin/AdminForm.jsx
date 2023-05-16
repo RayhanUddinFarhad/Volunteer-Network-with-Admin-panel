@@ -49,6 +49,7 @@ const AdminForm = () => {
             'Event added successfull!',
             'success'
           )
+          e.target.reset()
     
     
     })
@@ -107,7 +108,7 @@ const AdminForm = () => {
 
 
 <label className='font-bold'>Select Color</label>
- <input name='color' type="color" className='input input-bordered w-full' />
+ <input name='color' type="color" className='input input-bordered w-full ' />
 
 </div>
 

@@ -1,32 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import Events from './Event/Events';
+import { useLoaderData } from 'react-router-dom';
 
 
 const Home = () => {
 
 
 
-    const [event, setEvent] = useState ([])
+  const [event, setEvent] = useState([])
+  const { totalProducts } = useLoaderData()
+  const [currentPage, setCurrentPage] = useState (0)
+  const totalPerpage = 4;
 
 
-    useEffect (() => { 
-
-        fetch (`http://localhost:7000/allEvents`)
-        .then (res => res.json())
-        .then (data => setEvent (data))
+  const pages = Math.ceil(totalProducts / totalPerpage)
 
 
+  const totalPages = []
 
-    }, [])
+  for (let i = 1; i < pages; i++) {
+
+
+    totalPages.push(i)
+
+  }
+
+  console.log(totalPages)
 
 
 
 
-    return (
-       <>
-       
 
-       <div className="flex justify-center">
+  useEffect(() => {
+    async function fetchData() {
+        const response = await fetch(`http://localhost:7000/allEvents?page=${currentPage}&limit=${totalPerpage}`);
+
+        const data = await response.json();
+        setEvent(data);
+    }
+    fetchData();
+}, [currentPage, totalPerpage]);
+
+
+
+  
+  return (
+    <>
+
+
+      <div className="flex justify-center">
         <div className="space-y-10 w-full">
           <h1 className="text-4xl text-center font-bold">
             I grow by helping people in need.
@@ -40,39 +62,49 @@ const Home = () => {
                   className="input input-bordered"
                 />
                 <button className="btn btn-primary">
-                 
+
                   Search
                 </button>
               </div>
             </div>
 
-            
+
           </div>
 
 
-          
+
 
         </div>
       </div>
 
 
       <div className=' grid lg:grid-cols-4 mx-16 my-10 gap-10'>
-     {
+        {
 
-        event && event.map (data =>  <Events key={data._id} data = {data}></Events>
-        )
-     }
+          event && event.map(data => <Events key={data._id} data={data}></Events>
+          )
+        }
 
 
 
 
       </div>
-       
-       
-       
-       
-       </>
-    );
+
+
+      <p>{currentPage}</p>
+
+
+      {
+
+
+        totalPages.map(number => <button className='btn text-center' onClick={() => setCurrentPage (number)}>{number}</button>)
+      }
+
+
+
+
+    </>
+  );
 };
 
 export default Home;
