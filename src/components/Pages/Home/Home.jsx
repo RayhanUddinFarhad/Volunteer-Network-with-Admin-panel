@@ -9,7 +9,7 @@ const Home = () => {
 
   const [event, setEvent] = useState([])
   const { totalProducts } = useLoaderData()
-  const [currentPage, setCurrentPage] = useState (0)
+  const [currentPage, setCurrentPage] = useState(0)
   const totalPerpage = 4;
 
 
@@ -33,17 +33,25 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchData() {
-        const response = await fetch(`http://localhost:7000/allEvents?page=${currentPage}&limit=${totalPerpage}`);
+      const response = await fetch(`http://localhost:7000/allEvents?page=${currentPage}&limit=${totalPerpage}`);
 
-        const data = await response.json();
-        setEvent(data);
+      const data = await response.json();
+      setEvent(data);
     }
     fetchData();
-}, [currentPage, totalPerpage]);
+  }, [currentPage, totalPerpage]);
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
 
 
 
-  
+
   return (
     <>
 
@@ -97,9 +105,21 @@ const Home = () => {
       {
 
 
-        totalPages.map(number => <button className='btn text-center' onClick={() => setCurrentPage (number)}>{number}</button>)
+        totalPages.map(number => <button className='btn text-center' onClick={() => setCurrentPage(number)}>{number}</button>)
       }
+       <div className="pagination">
+        {currentPage > 1 && (
+          <button className="btn btn-primary" onClick={handlePreviousPage}>
+            Previous Page
+          </button>
+        )}
 
+        {currentPage < totalPages.length && (
+          <button className="btn btn-primary" onClick={handleNextPage}>
+            Next Page
+          </button>
+        )}
+      </div>
 
 
 
